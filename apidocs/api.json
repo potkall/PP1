@@ -64,6 +64,29 @@
                 }]
             }
         },
+        "/stats/lastcheck": {
+            "get": {
+                "tags": [
+                    "stats"
+                ],
+                "summary": "ostatnia synchronizacja",
+                "description": "timestamp ostatniego odczytu z OTOMOTO",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "content": {}
+                    }
+                },
+                "security": [{
+                    "petstore_auth": [
+                        "read:stats"
+                    ]
+                }]
+            }
+        },
         "/autos": {
             "get": {
                 "tags": [
