@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "OTOMOTO Scrapper&API",
+        "title": "OTOMOTO Scrapper-API",
         "description": "Projekt na zaliczenie: Paradygmaty programowania",
         "version": "1.0.0"
     },
@@ -10,11 +10,11 @@
     }],
     "tags": [{
             "name": "stats",
-            "description": "Statystyki API"
+            "description": "Statystyki"
         },
         {
             "name": "autos",
-            "description": "O autach w OTOMOTO"
+            "description": "Oferty"
         }
     ],
     "paths": {
@@ -23,19 +23,19 @@
                 "tags": [
                     "stats"
                 ],
-                "summary": "ilosc zapytań dziennie",
-                "description": "Ilość zapytań do API od 00:00",
+                "summary": "Ilość zapytań dziennie",
+                "description": "Ilość zapytań do bazy od 00:00",
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "content": {}
+                        "description": "Invalid status value"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
+                        "write:stats",
                         "read:stats"
                     ]
                 }]
@@ -46,19 +46,19 @@
                 "tags": [
                     "stats"
                 ],
-                "summary": "ilosc zapytań w sumie",
-                "description": "Ilość zapytań do API od poczatku serwisu PP1",
+                "summary": "Ilosc zapytań w sumie",
+                "description": "Ilość zapytań do bazy od poczatku serwisu PP1",
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "content": {}
+                        "description": "Invalid status value"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
+                        "write:stats",
                         "read:stats"
                     ]
                 }]
@@ -69,19 +69,19 @@
                 "tags": [
                     "stats"
                 ],
-                "summary": "ostatnia synchronizacja",
-                "description": "timestamp ostatniego odczytu z OTOMOTO",
+                "summary": "Ostatnia synchronizacja",
+                "description": "Timestamp ostatniego odczytu z serwisu",
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "content": {}
+                        "description": "Invalid status value"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
+                        "write:stats",
                         "read:stats"
                     ]
                 }]
@@ -92,19 +92,19 @@
                 "tags": [
                     "autos"
                 ],
-                "summary": "Ilość zapytań dziennie",
-                "description": "Ilość zapytań do API od 00:00",
+                "summary": "Pobiez oferty",
+                "description": "Pobiera wszystkie oferty",
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "content": {}
+                        "description": "Invalid status value"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
+                        "write:stats",
                         "read:stats"
                     ]
                 }]
@@ -113,10 +113,9 @@
                 "tags": [
                     "autos"
                 ],
-                "summary": "Poprawia opis auta",
-                "operationId": "updateAuto",
+                "summary": "Poprawia opis oferty",
                 "requestBody": {
-                    "description": "Objekt Auta z danymi do poprawienia opisu",
+                    "description": "Objekt oferty z danymi do poprawienia opisu",
                     "required": true,
                     "content": {
                         "application/x-www-form-urlencoded": {
@@ -124,11 +123,11 @@
                                 "properties": {
                                     "id": {
                                         "type": "string",
-                                        "description": "id auta do poprawy"
+                                        "description": "Id auta do poprawy"
                                     },
                                     "opis": {
                                         "type": "string",
-                                        "description": "nowy opis auta"
+                                        "description": "Nowy opis auta"
                                     }
                                 }
                             }
@@ -137,22 +136,19 @@
                 },
                 "responses": {
                     "400": {
-                        "description": "złe ID",
-                        "content": {}
+                        "description": "Invalid ID supplied"
                     },
                     "404": {
-                        "description": "Auta nie odnaleziono",
-                        "content": {}
+                        "description": "Offer not found"
                     },
                     "405": {
-                        "description": "błąd sprawdzenia",
-                        "content": {}
+                        "description": "Validation exception"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
-                        "write:pets",
-                        "read:pets"
+                        "write:autos",
+                        "read:autos"
                     ]
                 }],
                 "x-codegen-request-body-name": "body"
@@ -161,26 +157,95 @@
                 "tags": [
                     "autos"
                 ],
-                "summary": "Wstawia auto do bazy",
+                "summary": "Wstawia ofertę do bazy",
                 "requestBody": {
-                    "description": "Obiekt auto, który ma zostać dodany do bazy",
+                    "description": "Obiekt oferty, który ma zostać dodany do bazy",
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "marka": {
+                                    "id": {
                                         "type": "string",
-                                        "description": "marka"
+                                        "format": ""
+                                    },
+                                    "otomotoid": {
+                                        "type": "integer",
+                                        "format": ""
+                                    },
+                                    "otomotolink": {
+                                        "type": "string",
+                                        "format": ""
+                                    },
+                                    "nazwa_krotka": {
+                                        "type": "string",
+                                        "format": ""
+                                    },
+                                    "opis": {
+                                        "type": "string",
+                                        "format": ""
                                     },
                                     "rocznik": {
-                                        "type": "number",
-                                        "description": "rocznik"
+                                        "type": "integer",
+                                        "format": ""
+                                    },
+                                    "przebieg": {
+                                        "type": "integer",
+                                        "format": ""
+                                    },
+                                    "pojemnosc": {
+                                        "type": "integer",
+                                        "format": ""
+                                    },
+                                    "paliwo": {
+                                        "type": "string",
+                                        "format": ""
                                     },
                                     "cena": {
+                                        "type": "integer",
+                                        "format": ""
+                                    },
+                                    "waluta": {
                                         "type": "string",
-                                        "description": "cena"
+                                        "format": ""
+                                    },
+                                    "miasto": {
+                                        "type": "string",
+                                        "format": ""
+                                    },
+                                    "wojewodztwo": {
+                                        "type": "string",
+                                        "format": ""
+                                    },
+                                    "insertdate": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "status": {
+                                        "type": "integer",
+                                        "format": "",
+                                        "enum": [
+                                            "0",
+                                            "1"
+                                        ]
                                     }
                                 }
+                            },
+                            "example": {
+                                "id": "1002edf9-bcfa-288d-f2a4-5ea5ffaa817d",
+                                "otomotoid": 68765432112,
+                                "otomotolink": "https://xyz.xx/asd",
+                                "nazwa_krotka": "string",
+                                "opis": "string",
+                                "rocznik": 1995,
+                                "przebieg": 123000,
+                                "pojemnosc": 1593,
+                                "paliwo": "Benzyna",
+                                "cena": 12369,
+                                "waluta": "PLN",
+                                "miasto": "Poznań",
+                                "wojewodztwo": "Pomorskie",
+                                "insertdate": "2017-05-25",
+                                "status": 1
                             }
                         }
                     },
@@ -188,22 +253,19 @@
                 },
                 "responses": {
                     "400": {
-                        "description": "złe ID",
-                        "content": {}
+                        "description": "Invalid ID supplied"
                     },
                     "404": {
-                        "description": "auta nie odnaleziono",
-                        "content": {}
+                        "description": "Offer not found"
                     },
                     "405": {
-                        "description": "błąd sprawdzenia danych wejściowych",
-                        "content": {}
+                        "description": "Validation exception"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
-                        "write:pets",
-                        "read:pets"
+                        "write:autos",
+                        "read:autos"
                     ]
                 }],
                 "x-codegen-request-body-name": "body"
@@ -214,12 +276,12 @@
                 "tags": [
                     "autos"
                 ],
-                "summary": "wybranie auta",
-                "description": "Pobiera wszystkie informacje o danym aucie",
+                "summary": "Info o ofercie",
+                "description": "Pobiera wszystkie informacje o danej ofercie",
                 "parameters": [{
                     "name": "autoId",
                     "in": "path",
-                    "description": "ID auta do pobrania",
+                    "description": "ID oferty do pobrania",
                     "required": true,
                     "schema": {
                         "type": "integer",
@@ -228,15 +290,15 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "content": {}
+                        "description": "Invalid status value"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
+                        "write:stats",
                         "read:autos"
                     ]
                 }]
@@ -245,40 +307,32 @@
                 "tags": [
                     "autos"
                 ],
-                "summary": "Deletes a pet",
-                "operationId": "deletePet",
+                "summary": "Usuwa ofertę",
                 "parameters": [{
-                        "name": "api_key",
-                        "in": "header",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "autoId",
-                        "in": "path",
-                        "description": "Pet id to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
+                    "name": "autoId",
+                    "in": "path",
+                    "description": "Id oferty do usunięcia",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int64"
                     }
-                ],
+                }],
                 "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
                     "400": {
-                        "description": "Invalid ID supplied",
-                        "content": {}
+                        "description": "Invalid ID supplied"
                     },
                     "404": {
-                        "description": "Pet not found",
-                        "content": {}
+                        "description": "Offer not found"
                     }
                 },
                 "security": [{
                     "petstore_auth": [
-                        "write:pets",
-                        "read:pets"
+                        "write:autos",
+                        "read:autos"
                     ]
                 }]
             }
@@ -288,13 +342,13 @@
                 "tags": [
                     "autos"
                 ],
-                "summary": "Lista aut",
-                "description": "Filtrowanie listy aut po cechach, możliwe wiele filtrów naraz",
+                "summary": "Lista ofert",
+                "description": "Filtrowanie listy ofert po cechach - możliwe wiele filtrów naraz",
                 "operationId": "findAutosByTag",
                 "parameters": [{
                     "name": "tag",
                     "in": "query",
-                    "description": "nazwy tagów",
+                    "description": "Nazwy filtrów",
                     "required": true,
                     "style": "form",
                     "explode": true,
@@ -304,24 +358,21 @@
                             "type": "string",
                             "default": "available",
                             "enum": [
-                                "dostępne",
-                                "sprzedane",
                                 "cena",
                                 "marka",
                                 "model",
                                 "rocznik",
-                                "nooto"
+                                "nieoto"
                             ]
                         }
                     }
                 }],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "content": {}
+                        "description": "Invalid status value"
                     }
                 },
                 "security": [{
@@ -334,48 +385,7 @@
         }
     },
     "components": {
-        "schemas": {
-            "auto": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "string"
-                    },
-                    "autoId": {
-                        "type": "integer",
-                        "format": "string"
-                    },
-                    "cena": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "rocznik": {
-                        "type": "string",
-                        "format": "int32"
-                    },
-                    "źródło": {
-                        "type": "string",
-                        "format": "string"
-                    },
-                    "opis": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "status": {
-                        "type": "string",
-                        "description": "Order Status",
-                        "enum": [
-                            "distępne",
-                            "sprzedane"
-                        ]
-                    }
-                },
-                "xml": {
-                    "name": "Order"
-                }
-            }
-        },
+
         "securitySchemes": {
             "petstore_auth": {
                 "type": "oauth2",
@@ -383,8 +393,8 @@
                     "implicit": {
                         "authorizationUrl": "https://student1.potkal.pl/api/oauth/dialog",
                         "scopes": {
-                            "write:pets": "modify pets in your account",
-                            "read:pets": "read your pets"
+                            "write:autos": "Umożliwia zmianę w bazie ofert",
+                            "read:autos": "Umożliwia odczyt ofert"
                         }
                     }
                 }

@@ -1,13 +1,15 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+    file_put_contents("scrap-otomoto-cron.log","[".date("Y-m-d H:i:s")."] - Start script".PHP_EOL,FILE_APPEND);
+    
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
     require("classloader.php");
 
     $url="https://www.otomoto.pl/osobowe/?page=";
     $max_pages=1;
     $dom = new DOMDocument();
-    
+
     //pierwsza strona do pobrania ilości podstron
     $internalErrors = libxml_use_internal_errors(true);
     $dom->loadHtml(file_get_contents($url."1"));
@@ -26,13 +28,19 @@ ini_set('display_errors', 1);
         }   
     }
 
-    //$max_pages=2;
+    //zmniejszenie podstron ze względu na parametry hostingu
+    $max_pages=50;
     $br="<br>";
     $sqlarray=array();
+    file_put_contents("scrap-otomoto-cron.log","[".date("Y-m-d H:i:s")."] - Pages=".$max_pages.PHP_EOL,FILE_APPEND);
     for ($i=1;$i<$max_pages;$i++)
     {
         $internalErrors = libxml_use_internal_errors(true);
-        $dom->loadHtml(file_get_contents($url.$i));
+        $ttmp=file_get_contents($url.$i);
+        if ($ttmp)
+            $dom->loadHtml($ttmp);
+        else
+            continue;
         libxml_use_internal_errors($internalErrors);
 
         $autos = $dom->getElementsByTagName('article');
@@ -127,11 +135,6 @@ ini_set('display_errors', 1);
         
     }
 
-
-    // echo "<pre>";
-    // var_dump($sqlarray);
-    // echo "</pre>";
-
     $db=new cDb();
     $db->getDbHang()->beginTransaction();
     try{
@@ -148,40 +151,6 @@ ini_set('display_errors', 1);
         
         echo $e->getMessage();
     }
-    echo "KONIEC";
-    // $data = $_POST['addadmin'];
-    // 
-    // $ret=array();
-    // $old_row=array();
-    // $qa = "SELECT userid FROM osoby_admini WHERE userid=?";
-    // $qi = "INSERT INTO `osoby_admini`(`id`, `userid`, `adduserid`, `adddate`) VALUES (?,?,?,NOW())";
-    // $db->getDbHang()->beginTransaction();
-    // try{
-    //   foreach ($data AS $u){
-    //     $newid = (new cGuid())->create_guid();
-    //     $ok = $db->getSelect($qa,array($u));
-    //     if($ok){
-    //       $count = 1;
-    //     }else{
-    //       $count = $db->GetExecute($qi,array(
-    //         $newid,
-    //         $u,
-    //         $_SESSION['userid']
-    //       ));
-    //     }
-    //   }
-    //   if ($count==0)
-    //     throw new Exception('Nie można zapisać danych. Błąd: e-005');
-    //   $db->getDbHang()->commit();
-    //   $ret['msg']='ok';
-    // }
-    // catch(Exception $e){
-    //   $db->getDbHang()->rollBack();
-    //   $ret['msg']=$e->getMessage();
-    // }
-    // header('Content-Type: application/json');
-    // echo json_encode($ret);
-
-
+    file_put_contents("scrap-otomoto-cron.log","[".date("Y-m-d H:i:s")."] - end script".PHP_EOL.PHP_EOL,FILE_APPEND);
 
 ?>
