@@ -6,7 +6,7 @@
         "version": "1.0.0"
     },
     "servers": [{
-        "url": "https://student1.potkal.pl/api/v2"
+        "url": "https://wsinf.potkal.pl/api/v1"
     }],
     "tags": [{
             "name": "stats",
@@ -107,49 +107,6 @@
                         "write:stats",
                         "read:stats"
                     ]
-                }]
-            },
-            "post": {
-                "tags": [
-                    "autos"
-                ],
-                "summary": "Poprawia opis oferty",
-                "requestBody": {
-                    "description": "Objekt oferty z danymi do poprawienia opisu",
-                    "required": true,
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "properties": {
-                                    "id": {
-                                        "type": "string",
-                                        "description": "Id auta do poprawy"
-                                    },
-                                    "opis": {
-                                        "type": "string",
-                                        "description": "Nowy opis auta"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {
-                        "description": "Invalid ID supplied"
-                    },
-                    "404": {
-                        "description": "Offer not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
-                    }
-                },
-                "security": [{
-                    "petstore_auth": [
-                        "write:autos",
-                        "read:autos"
-                    ]
                 }],
                 "x-codegen-request-body-name": "body"
             },
@@ -164,23 +121,19 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "id": {
+                                    "link": {
                                         "type": "string",
                                         "format": ""
                                     },
-                                    "otomotoid": {
-                                        "type": "integer",
-                                        "format": ""
-                                    },
-                                    "otomotolink": {
+                                    "marka": {
                                         "type": "string",
                                         "format": ""
                                     },
-                                    "nazwa_krotka": {
+                                    "model": {
                                         "type": "string",
                                         "format": ""
                                     },
-                                    "opis": {
+                                    "txt": {
                                         "type": "string",
                                         "format": ""
                                     },
@@ -215,27 +168,14 @@
                                     "wojewodztwo": {
                                         "type": "string",
                                         "format": ""
-                                    },
-                                    "insertdate": {
-                                        "type": "string",
-                                        "format": "date-time"
-                                    },
-                                    "status": {
-                                        "type": "integer",
-                                        "format": "",
-                                        "enum": [
-                                            "0",
-                                            "1"
-                                        ]
                                     }
                                 }
                             },
                             "example": {
-                                "id": "1002edf9-bcfa-288d-f2a4-5ea5ffaa817d",
-                                "otomotoid": 68765432112,
-                                "otomotolink": "https://xyz.xx/asd",
-                                "nazwa_krotka": "string",
-                                "opis": "string",
+                                "link": "https://xyz.xx/asd",
+                                "marka": "Ford",
+                                "model": "Focus XL",
+                                "txt": "Dowolny tekst nt auta",
                                 "rocznik": 1995,
                                 "przebieg": 123000,
                                 "pojemnosc": 1593,
@@ -243,9 +183,7 @@
                                 "cena": 12369,
                                 "waluta": "PLN",
                                 "miasto": "Poznań",
-                                "wojewodztwo": "Pomorskie",
-                                "insertdate": "2017-05-25",
-                                "status": 1
+                                "wojewodztwo": "Pomorskie"
                             }
                         }
                     },
@@ -257,6 +195,50 @@
                     },
                     "404": {
                         "description": "Offer not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [{
+                    "petstore_auth": [
+                        "write:autos",
+                        "read:autos"
+                    ]
+                }]
+            },
+            "post": {
+                "tags": [
+                    "autos"
+                ],
+                "summary": "Poprawia opis oferty",
+                "requestBody": {
+                    "description": "Objekt oferty z danymi do poprawienia opisu",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id auta do poprawy"
+                                    },
+                                    "opis": {
+                                        "type": "string",
+                                        "description": "Nowy opis auta"
+                                    }
+                                },
+                                "example": {
+                                    "id": "36678da8-adf1-0f66-546a-5ebfaa6f3fe4",
+                                    "txt": "Other text"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
                     },
                     "405": {
                         "description": "Validation exception"
@@ -314,8 +296,7 @@
                     "description": "Id oferty do usunięcia",
                     "required": true,
                     "schema": {
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 }],
                 "responses": {
@@ -324,9 +305,6 @@
                     },
                     "400": {
                         "description": "Invalid ID supplied"
-                    },
-                    "404": {
-                        "description": "Offer not found"
                     }
                 },
                 "security": [{
@@ -343,30 +321,54 @@
                     "autos"
                 ],
                 "summary": "Lista ofert",
-                "description": "Filtrowanie listy ofert po cechach - możliwe wiele filtrów naraz",
+                "description": "Filtrowanie listy ofert - możliwe wiele filtrów naraz",
                 "operationId": "findAutosByTag",
                 "parameters": [{
-                    "name": "tag",
-                    "in": "query",
-                    "description": "Nazwy filtrów",
-                    "required": true,
-                    "style": "form",
-                    "explode": true,
-                    "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "default": "available",
-                            "enum": [
-                                "cena",
-                                "marka",
-                                "model",
-                                "rocznik",
-                                "nieoto"
-                            ]
+                        "name": "cena",
+                        "in": "query",
+                        "description": "pozwala wybrać zakres ceny:                              </br>\"xxx-\" oznacza cenę od</br>\"xxx-yyy\" oznacza zakres ceny</br>\"-yyy\" oznacza cenę do.<br><b>Myślik jest obowiązkowy.</b>",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "marka",
+                        "in": "query",
+                        "description": "nazwa marki",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "description": "nazwa modelu",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "rocznik",
+                        "in": "query",
+                        "description": "pozwala wybrać zakres rocznika:                                 </br>\"xxx-\" oznacza rocznik od</br>\"xxx-yyy\" oznacza zakres roczników</br>\"-yyy\" oznacza rocznik do.<br><b>Myślik jest obowiązkowy.</b>",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "nieoto",
+                        "in": "query",
+                        "description": "pobrane z OTOMOTO",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
                         }
                     }
-                }],
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
@@ -385,13 +387,12 @@
         }
     },
     "components": {
-
         "securitySchemes": {
             "petstore_auth": {
                 "type": "oauth2",
                 "flows": {
                     "implicit": {
-                        "authorizationUrl": "https://student1.potkal.pl/api/oauth/dialog",
+                        "authorizationUrl": "https://wsinf.potkal.pl/api/oauth/dialog",
                         "scopes": {
                             "write:autos": "Umożliwia zmianę w bazie ofert",
                             "read:autos": "Umożliwia odczyt ofert"

@@ -6,3 +6,72 @@
 [2020-04-27 22:48:22] - Pages=50
 [2020-04-27 22:49:12] - end script
 
+[2020-05-16 08:30:53] - Start script
+[2020-05-16 08:30:54] - Pages=50
+[2020-05-16 08:31:28] - end script
+
+[2020-05-16 08:35:26] - Start script
+[2020-05-16 08:35:26] - Pages=1
+[2020-05-16 08:35:26] - end script
+
+[2020-05-16 08:41:12] - Start script
+[2020-05-16 08:41:13] - Pages=1
+[2020-05-16 08:41:13] - end script
+
+[2020-05-16 08:42:03] - Start script
+[2020-05-16 08:42:03] - Pages=1
+[2020-05-16 08:42:03] - end script
+
+[2020-05-16 08:42:42] - Start script
+[2020-05-16 08:42:43] - Pages=1
+[2020-05-16 08:42:43] - end script
+
+[2020-05-16 08:43:28] - Start script
+[2020-05-16 08:43:29] - Pages=1
+[2020-05-16 08:43:29] - end script
+
+[2020-05-16 08:45:00] - Start script
+[2020-05-16 08:45:00] - Pages=2
+[2020-05-16 08:45:01] - end script
+
+[2020-05-16 08:45:39] - Start script
+[2020-05-16 08:45:39] - Pages=2
+[2020-05-16 08:45:40] - end script
+
+[2020-05-16 08:51:58] - Start script
+[2020-05-16 08:51:59] - Pages=2
+[2020-05-16 08:52:00] - error:SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '' for column `potkal_wsinf1`.`pp_otomoto`.`pojemmnosc` at row 1
+     a:14:{i:0;s:36:"103251d0-5682-e4c7-4e86-5ebfa9d015e9";i:1;s:10:"6074524988";i:2;s:99:"https://www.otomoto.pl/oferta/audi-a6-audi-sline-oplacony-przygotowany-do-rejestracji-ID6D65ru.html";i:3;s:4:"audi";i:4;s:7:"Audi A6";i:5;s:48:"Audi sline opłacony przygotowany do rejestracji";i:6;s:4:"2006";i:7;i:263000;i:8;s:0:"";i:9;s:6:"Diesel";i:10;i:28900;i:11;s:3:"PLN";i:12;s:18:"Ostrów Mazowiecka";i:13;s:11:"Mazowieckie";}
+[2020-05-16 08:52:00] - end script
+
+[2020-05-16 08:54:27] - Start script
+[2020-05-16 08:54:28] - Pages=2
+[2020-05-16 08:54:29] - end script
+
+[2020-05-16 09:01:45] - Start script
+[2020-05-16 09:01:46] - Pages=50
+[2020-05-16 09:02:19] - end script
+
+[2020-05-16 09:40:53] - Start script
+[2020-05-16 09:40:54] - Pages=50
+[2020-05-16 09:41:29] - end script
+
+[2020-05-16 16:09:37] - Start script
+[2020-05-16 16:09:38] - Pages=50
+[2020-05-16 16:10:15] - end script
+
+[2020-05-16 19:55:51] - Start script
+[2020-05-16 19:55:53] - Pages=50
+[2020-05-16 19:56:32] - end script
+
+[2020-05-16 21:55:59] - Start script
+[2020-05-16 21:56:00] - Pages=50
+[2020-05-16 21:56:36] - end script
+[2020-05-19 19:53:27] - Start script
+[2020-05-19 19:53:27] - Pages=50
+[2020-05-19 19:54:07] - end script
+
+[2020-05-19 20:03:15] - Start script
+[2020-05-19 20:03:16] - Pages=50
+[2020-05-19 20:03:55] - end script
+
